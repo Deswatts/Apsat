@@ -8,9 +8,9 @@
 
 ---
 
-[English](README-en.md)<!--TODO: 替换为英文版链接--> | [简体中文](README.md)
+[English](README-en.md) | [简体中文](README.md)
 
-## 程序简介 {#describe}
+## 程序简介
 
 Automated Player Skin Acquisition Tool(下文简写为Apsat) 是一款用于保存 Minecraft 玩家 (包括 Microsoft账户 与 第三方Yggdrasil账户) 档案下的自定义皮肤、披风与完整档案的GUI工具
 
@@ -27,7 +27,7 @@ Apsat 具有较为友好的GUI界面, 使用PyQt6进行编写, 拥有较为人�
 
 ---
 
-## 使用 {#usage}
+## 使用
 
 ### 你可以使用以下方式使用 Apsat:
 
@@ -35,9 +35,9 @@ Apsat 具有较为友好的GUI界面, 使用PyQt6进行编写, 拥有较为人�
 - 在 GitHub Release 中下载二进制文件
 - 自己构建 Apsat 的二进制文件
 
-### 直接运行 {#usage-run}
+### 直接运行
 
-1. 从 Apsat 的 [GitHub主页]()<!--TODO: 添加GitHub主页链接--> 下载源文件
+1. 从 Apsat 的 [GitHub主页](https://github.com/Deswatts/Apsat) 下载源文件
 
 2. 下载 uv ：
     - Linux 与 MacOS: 
@@ -66,15 +66,15 @@ uv run src/main.py
 
 ---
 
-### GitHub Release {#usage-github-release}
+### GitHub Release
 
 在 Apsat 的 [GitHub Release]()<!--TODO: 添加GitHub Release链接--> 里根据自身设备选择版本下载
 
 ---
 
-### 自己构建 {#usage-build}
+### 自己构建
 
-1. 从 Apsat 的 [GitHub主页]()<!--TODO: 添加GitHub主页链接--> 下载源文件
+1. 从 Apsat 的 [GitHub主页](https://github.com/Deswatts/Apsat) 下载源文件
 
 2. 下载 uv ：
     - Linux 与 MacOS: 
@@ -133,6 +133,6 @@ uv run nuitka --standalone --enable-plugin=pyqt6 --windows-console-mode=disable 
 
 ---
 
-## 开源协议 {#license}
+## 开源协议
 
 Apsat 在 [GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.html) 开源协议下发布

@@ -16,9 +16,9 @@ For compatibility, to ensure the GUI's visual quality, Apsat chooses Python 3.13
 
 ---
 
-[English](README-en.md)<!--TODO: 替换为英文版链接--> | [简体中文](README.md)
+[English](README-en.md) | [简体中文](README.md)
 
-## Usage {#usage}
+## Usage
 ### You can use Apsat in the following ways:
 - Run directly
 
@@ -26,8 +26,8 @@ For compatibility, to ensure the GUI's visual quality, Apsat chooses Python 3.13
 
 - Build the Apsat binary yourself
 
-### Run Directly {#usage-run}
-1. Download the source files from Apsat's [GitHub homepage]()<!--TODO: Add GitHub homepage link-->
+### Run Directly
+1. Download the source files from Apsat's [GitHub homepage](https://github.com/Deswatts/Apsat)
 
 2. Download uv:
 
@@ -60,14 +60,14 @@ uv run src/main.py
 
 ---
 
-### GitHub Release {#usage-github-release}
+### GitHub Release
 
 In Apsat's [GitHub Release]()<!--TODO: Add GitHub Release link-->, choose a version to download according to your device.
 
 ---
 
-### Build It Yourself {#usage-build}
-1. Download the source files from Apsat's GitHub homepage<!--TODO: Add GitHub homepage link-->
+### Build It Yourself
+1. Download the source files from Apsat's [GitHub homepage](https://github.com/Deswatts/Apsat)
 
 
 2. Download uv:
