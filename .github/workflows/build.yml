@@ -44,8 +44,9 @@ jobs:
 
       - name: Setup MSVC
         if: runner.os == 'Windows'
-        run: |
-          winget install Microsoft.VisualStudio.2022.BuildTools --silent --override "--wait --quiet --add Microsoft.VisualStudio.Workload.VCTools --includeRecommended"
+        uses: TheMrMilchmann/setup-msvc-dev@v4
+        with:
+          arch: x64
       
       - name: Build with Nuitka (Windows)
         if: runner.os == 'Windows'
