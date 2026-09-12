@@ -57,6 +57,7 @@ jobs:
           --noinclude-qt-translations
           --windows-icon-from-ico=assets/icon.ico
           --output-filename=apsat-${{ matrix.platform }}
+          --assume-yes-for-downloads
           --onefile
           src/main.py
 
@@ -72,6 +73,7 @@ jobs:
           --nofollow-import-to=pytest,ruff
           --noinclude-qt-translations
           --output-filename=apsat-${{ matrix.platform }}
+          --assume-yes-for-downloads
           --onefile
           src/main.py
 
