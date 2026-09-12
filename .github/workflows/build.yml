@@ -42,6 +42,12 @@ jobs:
       - name: Install dependencies
         run: uv sync --no-group dev
 
+      - name: Setup MSVC
+        if: runner.os == 'Windows'
+        uses: TheMrMilchmann/setup-msvc-dev@v4
+        with:
+          arch: x64
+      
       - name: Build with Nuitka (Windows)
         if: runner.os == 'Windows'
         run: >
