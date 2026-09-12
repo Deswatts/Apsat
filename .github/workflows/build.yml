@@ -1,0 +1,111 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag (e.g. v1.0.0)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            platform: windows
+            artifact_name: apsat-windows
+          - os: ubuntu-latest
+            platform: linux
+            artifact_name: apsat-linux
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "latest"
+          python-version: "3.13.9"
+
+      - name: Install dependencies
+        run: uv sync --no-group dev
+
+      - name: Build with Nuitka (Windows)
+        if: runner.os == 'Windows'
+        run: >
+          uv run nuitka
+          --standalone
+          --enable-plugin=pyqt6
+          --windows-console-mode=disable
+          --output-dir=dist
+          --jobs=4
+          --lto=yes
+          --nofollow-import-to=pytest,ruff
+          --msvc=latest
+          --noinclude-qt-translations
+          --windows-icon-from-ico=assets/icon.ico
+          --output-filename=apsat-${{ matrix.platform }}
+          --onefile
+          src/main.py
+
+      - name: Build with Nuitka (Linux)
+        if: runner.os == 'Linux'
+        run: >
+          uv run nuitka
+          --standalone
+          --enable-plugin=pyqt6
+          --output-dir=dist
+          --jobs=$(nproc)
+          --lto=yes
+          --nofollow-import-to=pytest,ruff
+          --noinclude-qt-translations
+          --output-filename=apsat-${{ matrix.platform }}
+          --onefile
+          src/main.py
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: dist/apsat-${{ matrix.platform }}*
+          if-no-files-found: error
+
+  release:
+    name: Create Release
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+
+      - name: List files
+        run: find artifacts -type f
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tag || github.ref_name }}
+          name: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tag || github.ref_name }}
+          files: artifacts/**/*
+          generate_release_notes: true
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
