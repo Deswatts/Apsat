@@ -1,0 +1,16 @@
+jobs:
+  build:
+    runs-on: [ubuntu-latest]
+    strategy:
+      matrix:
+        python-version: ["3.13"]
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install the latest version of uv and set the python version
+        uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install requirements
+        run: uv sync --no-group dev
+      - name: Build with python ${{ matrix.python-version }}
+        run: uv run nuitka --standalone --enable-plugin=pyqt6 --windows-console-mode=disable --output-dir=dist --jobs=$(nproc) --lto=yes --nofollow-import-to=pytest,ruff --noinclude-qt-translations --output-filename=apsat --onefile src/main.py
