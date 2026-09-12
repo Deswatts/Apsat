@@ -62,7 +62,7 @@ uv run src/main.py
 
 ### GitHub Release
 
-In Apsat's [GitHub Release]()<!--TODO: Add GitHub Release link-->, choose a version to download according to your device.
+In Apsat's [GitHub Release](https://github.com/Deswatts/Apsat/releases), choose a version to download according to your device.
 
 ---
 

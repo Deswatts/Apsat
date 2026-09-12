@@ -68,7 +68,7 @@ uv run src/main.py
 
 ### GitHub Release
 
-在 Apsat 的 [GitHub Release]()<!--TODO: 添加GitHub Release链接--> 里根据自身设备选择版本下载
+在 Apsat 的 [GitHub Release](https://github.com/Deswatts/Apsat/releases) 里根据自身设备选择版本下载
 
 ---
 
