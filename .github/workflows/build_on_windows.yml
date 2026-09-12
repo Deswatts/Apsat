@@ -4,7 +4,7 @@ on:
 
 jobs:
   build:
-    runs-on: [windows-latest]
+    runs-on: [windows-2025-vs2026]
     strategy:
       matrix:
         python-version: ["3.13"]
@@ -17,4 +17,4 @@ jobs:
       - name: Install requirements
         run: uv sync --no-group dev
       - name: Build with python ${{ matrix.python-version }}
-        run: uv run nuitka --standalone --enable-plugin=pyqt6 --windows-console-mode=disable --output-dir=dist --jobs=$(nproc) --lto=yes --nofollow-import-to=pytest,ruff --noinclude-qt-translations --output-filename=apsat --onefile src/main.py
+        run: uv run nuitka --standalone --enable-plugin=pyqt6 --windows-console-mode=disable --output-dir=dist --jobs=4 --lto=yes --nofollow-import-to=pytest,ruff --msvc=latest --noinclude-qt-translations --windows-icon-from-ico=assets/icon.ico --output-filename=apsat --onefile src/main.py
