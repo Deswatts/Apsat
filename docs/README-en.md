@@ -1,8 +1,10 @@
 <div align="center"> <img src="../assets/icon.png" alt="apsat logo" width="128"> </div><h1 align="center"> Automated Player Skin Acquisition Tool </h1>
 
 <div align="center">
-    <iframe alt="github-repo" src="https://img.shields.io/badge/github-repo-blue?logo=github&link=https%3A%2F%2Fgithub.com%2FDeswatts%2FApsat%2F">
-    <iframe alt="gitee-mirror" src="https://img.shields.io/badge/gitee-mirror-orange?logo=gitee&link=https%3A%2F%2Fgitee.com%2Fdeswatts%2FApsat%2F">
+
+![github-repo](https://img.shields.io/badge/github-repo-blue?logo=github&link=https%3A%2F%2Fgithub.com%2FDeswatts%2FApsat%2F)
+![gitee-mirror](https://img.shields.io/badge/gitee-mirror-orange?logo=gitee&link=https%3A%2F%2Fgitee.com%2Fdeswatts%2FApsat%2F)
+
 </div>
 
 <br>
