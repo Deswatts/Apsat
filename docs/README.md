@@ -6,6 +6,11 @@
     Automated Player Skin Acquisition Tool
 </h1>
 
+<div align="center">
+    <img alt="github-repo" src="https://img.shields.io/badge/github-repo-blue?logo=github&link=https%3A%2F%2Fgithub.com%2FDeswatts%2FApsat%2F">
+    <img alt="gitee-mirror" src="https://img.shields.io/badge/gitee-mirror-orange?logo=gitee&link=https%3A%2F%2Fgitee.com%2Fdeswatts%2FApsat%2F">
+</div>
+
 ---
 
 [English](README-en.md) | [简体中文](README.md)
