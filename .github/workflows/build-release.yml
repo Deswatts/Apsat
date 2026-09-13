@@ -51,12 +51,12 @@ jobs:
         run: >
           uv run nuitka
           --standalone
-          --enable-plugin=pyqt6
+          --enable-plugin=pyside6
           --windows-console-mode=disable
           --output-dir=dist
           --jobs=4
           --lto=yes
-          --nofollow-import-to=pytest,ruff
+          --nofollow-import-to=pytest,ruff,ty
           --msvc=latest
           --noinclude-qt-translations
           --windows-icon-from-ico=assets/icon.ico
@@ -93,13 +93,13 @@ jobs:
         run: >
           uv run nuitka
           --standalone
-          --enable-plugin=pyqt6
+          --enable-plugin=pyside6
           --macos-create-app-bundle
           --macos-app-icon=assets/icon.png
           --output-dir=dist
           --jobs=$(sysctl -n hw.ncpu)
           --lto=yes
-          --nofollow-import-to=pytest,ruff
+          --nofollow-import-to=pytest,ruff,ty
           --noinclude-qt-translations
           --assume-yes-for-downloads
           src/main.py
@@ -129,11 +129,11 @@ jobs:
         run: >
           uv run nuitka
           --standalone
-          --enable-plugin=pyqt6
+          --enable-plugin=pyside6
           --output-dir=dist
           --jobs=$(nproc)
           --lto=yes
-          --nofollow-import-to=pytest,ruff
+          --nofollow-import-to=pytest,ruff,ty
           --noinclude-qt-translations
           --assume-yes-for-downloads
           src/main.py

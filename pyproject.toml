@@ -7,7 +7,7 @@ dependencies = [
     "requests>=2.34.2",
     "deswatts-tools>=1.0.0",
     "imageio",
-    "pyqt6==6.5.3",
+    "pyside6>=6.11.2",
 ]
 
 [dependency-groups]

@@ -6,10 +6,10 @@ import threading
 from base64 import b64decode as b64
 from json import JSONDecodeError
 
-from PyQt6 import QtGui
-from PyQt6.QtCore import Qt, QTimer
-from PyQt6.QtGui import QAction, QIcon, QKeySequence, QShortcut
-from PyQt6.QtWidgets import (
+from PySide6 import QtGui
+from PySide6.QtCore import Qt, QTimer
+from PySide6.QtGui import QAction, QIcon, QKeySequence, QShortcut
+from PySide6.QtWidgets import (
     QApplication,
     QComboBox,
     QHBoxLayout,
