@@ -93,6 +93,11 @@ jobs:
           uv sync --no-group dev
           uv pip install "PyQt6==6.5.3" "PyQt6-Qt6==6.5.3"
       
+      - name: Test
+        if: matrix.platform == 'macos'
+        run: |
+          uv pip list | grep imageio
+      
       - name: Build with Nuitka (macOS)
         if: matrix.platform == 'macos'
         run: >
