@@ -1,0 +1,201 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag (e.g. v1.0.0)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  # ==================== 构建各平台产物 ====================
+  build:
+    name: Build (${{ matrix.platform }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            platform: windows
+          - os: macos-latest
+            platform: macos
+          - os: ubuntu-latest
+            platform: linux
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "latest"
+          python-version: "3.13.9"
+
+      - name: Install dependencies
+        run: uv sync --no-group dev
+
+      # ============================================================
+      #                       Windows 构建
+      # ============================================================
+      - name: Build with Nuitka (Windows)
+        if: matrix.platform == 'windows'
+        run: >
+          uv run nuitka
+          --standalone
+          --enable-plugin=pyqt6
+          --windows-console-mode=disable
+          --output-dir=dist
+          --jobs=4
+          --lto=yes
+          --nofollow-import-to=pytest,ruff
+          --msvc=latest
+          --noinclude-qt-translations
+          --windows-icon-from-ico=assets/icon.ico
+          --assume-yes-for-downloads
+          src/main.py
+
+      - name: Install Inno Setup (Windows)
+        if: matrix.platform == 'windows'
+        run: choco install innosetup -y --no-progress
+
+      - name: Build Windows Installer
+        if: matrix.platform == 'windows'
+        working-directory: packaging
+        run: iscc installer.iss
+
+      - name: Upload Windows installer
+        if: matrix.platform == 'windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: installer-windows
+          path: dist/*.exe
+          if-no-files-found: error
+
+      # ============================================================
+      #                       macOS 构建
+      # ============================================================
+      - name: Build with Nuitka (macOS)
+        if: matrix.platform == 'macos'
+        run: >
+          uv run nuitka
+          --standalone
+          --enable-plugin=pyqt6
+          --macos-create-app-bundle
+          --macos-app-icon=assets/icon.png
+          --output-dir=dist
+          --jobs=$(sysctl -n hw.ncpu)
+          --lto=yes
+          --nofollow-import-to=pytest,ruff
+          --noinclude-qt-translations
+          --assume-yes-for-downloads
+          src/main.py
+
+      - name: Install dmgbuild (macOS)
+        if: matrix.platform == 'macos'
+        run: uv pip install dmgbuild
+
+      - name: Build macOS DMG
+        if: matrix.platform == 'macos'
+        run: |
+          uv run dmgbuild -s packaging/dmg_settings.py "Apsat" dist/Apsat.dmg
+
+      - name: Upload macOS DMG
+        if: matrix.platform == 'macos'
+        uses: actions/upload-artifact@v4
+        with:
+          name: installer-macos
+          path: dist/*.dmg
+          if-no-files-found: error
+
+      # ============================================================
+      #                       Linux 构建
+      # ============================================================
+      - name: Build with Nuitka (Linux)
+        if: matrix.platform == 'linux'
+        run: >
+          uv run nuitka
+          --standalone
+          --enable-plugin=pyqt6
+          --output-dir=dist
+          --jobs=$(nproc)
+          --lto=yes
+          --nofollow-import-to=pytest,ruff
+          --noinclude-qt-translations
+          --assume-yes-for-downloads
+          src/main.py
+
+      - name: Prepare AppDir (Linux)
+        if: matrix.platform == 'linux'
+        run: |
+          mkdir -p AppDir/usr/bin
+          cp -r dist/main.dist/* AppDir/usr/bin/
+          cp assets/icon.png AppDir/apsat.png
+          cp packaging/apsat.desktop AppDir/apsat.desktop
+
+          # 创建 AppRun 入口脚本
+          cat > AppDir/AppRun << 'EOF'
+          #!/bin/bash
+          HERE="$(dirname "$(readlink -f "${0}")")"
+          exec "${HERE}/usr/bin/main" "$@"
+          EOF
+          chmod +x AppDir/AppRun
+
+          # 创建顶层 .desktop 符号链接
+          ln -sf apsat.desktop AppDir/apsat.desktop
+
+      - name: Download appimagetool (Linux)
+        if: matrix.platform == 'linux'
+        run: |
+          wget -q https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage -O appimagetool
+          chmod +x appimagetool
+
+      - name: Build Linux AppImage
+        if: matrix.platform == 'linux'
+        run: |
+          ARCH=x86_64 ./appimagetool --appimage-extract-and-run AppDir dist/Apsat-x86_64.AppImage
+
+      - name: Upload Linux AppImage
+        if: matrix.platform == 'linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: installer-linux
+          path: dist/*.AppImage
+          if-no-files-found: error
+
+  # ==================== 创建 Release ====================
+  release:
+    name: Create Release
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+
+      - name: List artifacts
+        run: find artifacts -type f
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tag || github.ref_name }}
+          name: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tag || github.ref_name }}
+          files: artifacts/**
+          generate_release_notes: true
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

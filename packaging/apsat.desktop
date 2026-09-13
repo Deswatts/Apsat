@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Apsat
+Comment=Automated Player Skin Acquisition Tool
+Exec=apsat
+Icon=apsat
+Terminal=false
+Categories=Utility;Application;

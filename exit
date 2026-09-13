@@ -1,0 +1,100 @@
+[33mcommit 56c8113d449acca434ee6a908eaf8fb5f93e09a1[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Merge: 920d775 4f236cb
+Author: Deswatts <3696232442@qq.com>
+Date:   Sat Sep 12 21:08:09 2026 +0800
+
+    Merge branch 'main' of https://github.com/Deswatts/Apsat
+
+[33mcommit 920d775c5c81d9bb3a805dd760ac9a4ca81ac2fd[m[33m ([m[1;33mtag: [m[1;33mv1.0.1[m[33m)[m
+Author: Deswatts <3696232442@qq.com>
+Date:   Sat Sep 12 21:04:23 2026 +0800
+
+    Change readme
+
+[33mcommit 4f236cb8b68d82dfc59c9b36b4d80088147a1535[m
+Author: Deswatts <3696232442@qq.com>
+Date:   Sat Sep 12 20:51:49 2026 +0800
+
+    Replace MSVC installation command with setup action
+
+[33mcommit 35fc722797feb30f35cfcc5181f0f2a310fdca48[m
+Author: Deswatts <3696232442@qq.com>
+Date:   Sat Sep 12 20:47:44 2026 +0800
+
+    Update build.yml
+
+[33mcommit bf030de15d45bec30eb98d4e0b791f432a7b735b[m
+Author: Deswatts <3696232442@qq.com>
+Date:   Sat Sep 12 20:41:28 2026 +0800
+
+    Add MSVC setup step for Windows builds
+
+[33mcommit b9e83eff2d706b87fec66d5a3e7d0663b89af6dd[m
+Author: Deswatts <3696232442@qq.com>
+Date:   Sat Sep 12 20:26:49 2026 +0800
+
+    Update Windows OS version in build workflow
+
+[33mcommit efe58b69dad5de6d950bf82379bb605840dfdf27[m
+Author: Deswatts <3696232442@qq.com>
+Date:   Sat Sep 12 20:22:32 2026 +0800
+
+    Add assume-yes option to Nuitka build commands
+    
+    Added '--assume-yes-for-downloads' option to Nuitka build commands for both Windows and Linux.
+
+[33mcommit 01e9f62f38188cc1d5fbeaa5dcef92d3ec3d24ed[m
+Author: Deswatts <3696232442@qq.com>
+Date:   Sat Sep 12 20:11:41 2026 +0800
+
+    Add build and release workflow configuration
+
+[33mcommit 921180c358ab3abfa63a26fe47c759ea499b4a5e[m
+Author: Deswatts <3696232442@qq.com>
+Date:   Sat Sep 12 20:10:29 2026 +0800
+
+    Delete .github/workflows/build_on_linux.yml
+
+[33mcommit 2e1c4b792f0d97dd652b7a2a63a9e36afec684d1[m
+Author: Deswatts <3696232442@qq.com>
+Date:   Sat Sep 12 20:10:21 2026 +0800
+
+    Delete .github/workflows/build_on_windows.yml
+
+[33mcommit 0e642f9787a190e264ad3f656b52b72c809e1ab6[m
+Author: Deswatts <3696232442@qq.com>
+Date:   Sat Sep 12 20:02:18 2026 +0800
+
+    Change Windows runner and update build command
+    
+    Updated the Windows build configuration to use a new runner and modified the build command to include additional parameters.
+
+[33mcommit 3d3a6838dd43ec907076a7a67eb70a3f17e7dc5a[m
+Author: Deswatts <3696232442@qq.com>
+Date:   Sat Sep 12 19:55:40 2026 +0800
+
+    Set Windows as the runner for build job
+
+[33mcommit 38b94e47769edf675c9591fd8bff82e9f0868f64[m
+Author: Deswatts <3696232442@qq.com>
+Date:   Sat Sep 12 19:54:29 2026 +0800
+
+    Trigger build on release creation
+
+[33mcommit 7ac76c64235c1cfbdef7374863ce963ca1216ec4[m
+Author: Deswatts <3696232442@qq.com>
+Date:   Sat Sep 12 19:49:45 2026 +0800
+
+    Update build job to run only on Ubuntu
+
+[33mcommit aa5f750e9d8d65212b354a6dd06eae14960db661[m[33m ([m[1;33mtag: [m[1;33mv1.0.0[m[33m)[m
+Author: Deswatts <3696232442@qq.com>
+Date:   Sat Sep 12 19:34:49 2026 +0800
+
+    Change readme
+
+[33mcommit 7e7b817e0b0801c1c26a7dc30259192bd89fbab9[m
+Author: Deswatts <3696232442@qq.com>
+Date:   Sat Sep 12 19:24:59 2026 +0800
+
+    Version 1.0.0
