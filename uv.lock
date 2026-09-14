@@ -3,10 +3,24 @@ revision = 3
 requires-python = ">=3.13"
 
 [[package]]
+name = "apsat-core"
+version = "1.0.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "deswatts-tools" },
+    { name = "requests" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/d4/71/d556b70d35264ffcc130e41010a99d5ca1b5ec1c8636d3d14af6600b0edb/apsat_core-1.0.0.tar.gz", hash = "sha256:bcd8401cb5a32212d1ce1531aa6eb0c62d38afe6e1a9c5c81963a36c6f8e5ea3", size = 17708, upload-time = "2026-09-14T14:14:00.891Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/67/fd/909cfb8399df1ab7d73abe09f1c268274ac1b94df4bf1d1b9b5e2f53515c/apsat_core-1.0.0-py3-none-any.whl", hash = "sha256:80b7b4f098f82163f88c14447966b718207790135d46375bcada8916d8b91ac3", size = 21887, upload-time = "2026-09-14T14:13:59.938Z" },
+]
+
+[[package]]
 name = "apsat-gen2"
-version = "1.0.2"
+version = "1.0.3"
 source = { virtual = "." }
 dependencies = [
+    { name = "apsat-core" },
     { name = "deswatts-tools" },
     { name = "imageio" },
     { name = "nuitka" },
@@ -23,6 +37,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "apsat-core", specifier = ">=1.0.0" },
     { name = "deswatts-tools", specifier = ">=1.0.0" },
     { name = "imageio" },
     { name = "nuitka", specifier = ">=4.2.1" },

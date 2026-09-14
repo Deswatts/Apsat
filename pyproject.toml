@@ -1,6 +1,6 @@
 [project]
 name = "apsat-gen2"
-version = "1.0.2"
+version = "1.0.3"
 requires-python = ">=3.13"
 dependencies = [
     "nuitka>=4.2.1",
@@ -8,6 +8,7 @@ dependencies = [
     "deswatts-tools>=1.0.0",
     "imageio",
     "pyside6>=6.11.2",
+    "apsat-core>=1.0.0",
 ]
 
 [dependency-groups]
