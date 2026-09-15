@@ -176,7 +176,7 @@ jobs:
       - name: Build .deb package
         if: matrix.platform == 'linux'
         run: |
-          VERSION="${GITHUB_REF_NAME#v}"
+          VERSION="${{ github.event.inputs.tag }}"
           fpm -s dir -t deb \
             -n apsat \
             -v "$VERSION" \
@@ -199,7 +199,7 @@ jobs:
       - name: Build .rpm package
         if: matrix.platform == 'linux'
         run: |
-          VERSION="${GITHUB_REF_NAME#v}"
+          VERSION="${{ github.event.inputs.tag }}"
           fpm -s dir -t rpm \
             -n apsat \
             -v "$VERSION" \
