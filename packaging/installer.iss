@@ -1,5 +1,5 @@
 ; Inno Setup 脚本，用于将 Nuitka 输出的文件夹打包成安装程序
-#define MyAppName "Apsat"
+#define MyAppName "apsat"
 #define MyAppVersion "1.0.3"
 #define MyAppPublisher "Deswatts"
 #define MyAppURL "https://github.com/Deswatts/Apsat"
