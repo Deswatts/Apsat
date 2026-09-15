@@ -138,19 +138,96 @@ jobs:
           --assume-yes-for-downloads
           src/main.py
 
+      # ---------- 准备打包目录 ----------
+      - name: Prepare packaging directory (Linux)
+        if: matrix.platform == 'linux'
+        run: |
+          # 程序文件
+          mkdir -p pkgroot/opt/apsat
+          cp -r dist/main.dist/* pkgroot/opt/apsat/
+
+          # 启动脚本
+          mkdir -p pkgroot/usr/bin
+          cat > pkgroot/usr/bin/apsat << 'EOF'
+          #!/bin/bash
+          exec /opt/apsat/main "$@"
+          EOF
+          chmod +x pkgroot/usr/bin/apsat
+
+          # 桌面入口
+          mkdir -p pkgroot/usr/share/applications
+          cp packaging/apsat.desktop pkgroot/usr/share/applications/apsat.desktop
+
+          # 图标
+          mkdir -p pkgroot/usr/share/icons/hicolor/256x256/apps
+          cp assets/icon.png pkgroot/usr/share/icons/hicolor/256x256/apps/apsat.png
+
+          # 验证结构
+          find pkgroot -type f
+
+      # ---------- 构建 .deb 和 .rpm ----------
+      - name: Install fpm (Linux)
+        if: matrix.platform == 'linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ruby ruby-dev build-essential rpm
+          sudo gem install fpm
+
+      - name: Build .deb package
+        if: matrix.platform == 'linux'
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          fpm -s dir -t deb \
+            -n apsat \
+            -v "$VERSION" \
+            --description "Automated Player Skin Acquisition Tool" \
+            --url "https://github.com/Deswatts/Apsat" \
+            --license "GPLv3" \
+            --maintainer "Deswatts" \
+            --depends "libc6" \
+            --depends "libxcb1" \
+            --depends "libx11-6" \
+            --depends "libgl1" \
+            --depends "libegl1" \
+            --depends "libxkbcommon0" \
+            --depends "libdbus-1-3" \
+            --depends "libfontconfig1" \
+            -C pkgroot \
+            -p dist/apsat_${VERSION}_amd64.deb \
+            .
+
+      - name: Build .rpm package
+        if: matrix.platform == 'linux'
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          fpm -s dir -t rpm \
+            -n apsat \
+            -v "$VERSION" \
+            --description "Automated Player Skin Acquisition Tool" \
+            --url "https://github.com/Deswatts/Apsat" \
+            --license "GPLv3" \
+            --maintainer "Deswatts" \
+            --depends "glibc" \
+            --depends "libxcb" \
+            --depends "libX11" \
+            --depends "mesa-libGL" \
+            --depends "mesa-libEGL" \
+            --depends "libxkbcommon" \
+            --depends "dbus-libs" \
+            --depends "fontconfig" \
+            -C pkgroot \
+            -p dist/apsat-${VERSION}-1.x86_64.rpm \
+            .
+
+      # ---------- AppImage（保留原有逻辑） ----------
       - name: Prepare AppDir (Linux)
         if: matrix.platform == 'linux'
         run: |
           mkdir -p AppDir/usr/bin
           cp -r dist/main.dist/* AppDir/usr/bin/
           cp assets/icon.png AppDir/apsat.png
-
-          # 将 .desktop 文件同时放到根目录和标准位置
           cp packaging/apsat.desktop AppDir/apsat.desktop
-          mkdir -p AppDir/usr/share/applications
-          cp packaging/apsat.desktop AppDir/usr/share/applications/apsat.desktop
 
-          # 创建 AppRun 入口脚本
           cat > AppDir/AppRun << 'EOF'
           #!/bin/bash
           HERE="$(dirname "$(readlink -f "${0}")")"
@@ -167,14 +244,18 @@ jobs:
       - name: Build Linux AppImage
         if: matrix.platform == 'linux'
         run: |
-          ARCH=x86_64 ./appimagetool --appimage-extract-and-run AppDir dist/Apsat-linux-x86_64.AppImage
+          ARCH=x86_64 ./appimagetool --appimage-extract-and-run AppDir dist/Apsat-x86_64.AppImage
 
-      - name: Upload Linux AppImage
+      # ---------- 上传所有 Linux 产物 ----------
+      - name: Upload Linux packages
         if: matrix.platform == 'linux'
         uses: actions/upload-artifact@v4
         with:
           name: installer-linux
-          path: dist/*.AppImage
+          path: |
+            dist/*.deb
+            dist/*.rpm
+            dist/*.AppImage
           if-no-files-found: error
 
   # ==================== 创建 Release ====================
