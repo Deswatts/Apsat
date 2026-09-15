@@ -111,7 +111,7 @@ jobs:
       - name: Build macOS DMG
         if: matrix.platform == 'macos'
         run: |
-          uv run dmgbuild -s packaging/dmg_settings.py "Apsat" dist/Apsat-macos.dmg
+          uv run dmgbuild -s packaging/dmg_settings.py "Apsat" dist/apsat-macos-${{ github.event.inputs.tag }}.dmg
 
       - name: Upload macOS DMG
         if: matrix.platform == 'macos'
