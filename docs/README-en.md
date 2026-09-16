@@ -16,7 +16,7 @@
 ## Description {#describe}
 Automated Player Skin Acquisition Tool (hereinafter abbreviated as Apsat) is a GUI tool for saving custom skins, capes, and complete profiles from Minecraft player profiles (including Microsoft accounts and third-party Yggdrasil accounts).
 
-Apsat has a fairly friendly GUI, is written using PyQt6, and offers a user-friendly input method. It can accept multiple Minecraft accounts for batch saving.
+Apsat has a fairly friendly GUI, is written using PySide6, and offers a user-friendly input method. It can accept multiple Minecraft accounts for batch saving.
 
 For compatibility, to ensure the GUI's visual quality, Apsat chooses Python 3.13.9, so users on Windows 7 and below cannot use this tool. If necessary, a version supporting Windows 7 and below will be released in the future.
 

@@ -112,6 +112,7 @@ jobs:
         if: matrix.platform == 'macos'
         run: |
           uv run dmgbuild -s packaging/dmg_settings.py "Apsat" dist/apsat-macos.dmg
+          uv run dmgbuild -s packaging/dmg_settings.py "Apsat" dist/apsat-macos-${{ github.event.inputs.tag }}.dmg
 
       - name: Upload macOS DMG
         if: matrix.platform == 'macos'
@@ -176,7 +177,7 @@ jobs:
       - name: Build .deb package
         if: matrix.platform == 'linux'
         run: |
-          VERSION="${GITHUB_REF_NAME#v}"
+          VERSION="${{ github.event.inputs.tag }}"
           fpm -s dir -t deb \
             -n apsat \
             -v "$VERSION" \
@@ -199,7 +200,7 @@ jobs:
       - name: Build .rpm package
         if: matrix.platform == 'linux'
         run: |
-          VERSION="${GITHUB_REF_NAME#v}"
+          VERSION="${{ github.event.inputs.tag }}"
           fpm -s dir -t rpm \
             -n apsat \
             -v "$VERSION" \
