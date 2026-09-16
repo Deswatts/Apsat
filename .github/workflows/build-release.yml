@@ -111,7 +111,7 @@ jobs:
       - name: Build macOS DMG
         if: matrix.platform == 'macos'
         run: |
-          uv run dmgbuild -s packaging/dmg_settings.py "Apsat" dist/Apsat-macos.dmg
+          uv run dmgbuild -s packaging/dmg_settings.py "Apsat" dist/apsat-macos.dmg
 
       - name: Upload macOS DMG
         if: matrix.platform == 'macos'
@@ -244,7 +244,7 @@ jobs:
       - name: Build Linux AppImage
         if: matrix.platform == 'linux'
         run: |
-          ARCH=x86_64 ./appimagetool --appimage-extract-and-run AppDir dist/Apsat-x86_64.AppImage
+          ARCH=x86_64 ./appimagetool --appimage-extract-and-run AppDir dist/apsat-linux-${GITHUB_REF_NAME#v}-x86_64.AppImage
 
       # ---------- 上传所有 Linux 产物 ----------
       - name: Upload Linux packages
