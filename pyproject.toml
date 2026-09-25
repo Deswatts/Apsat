@@ -9,6 +9,7 @@ dependencies = [
     "imageio",
     "pyside6>=6.11.2",
     "apsat-core>=1.0.0",
+    "pyqtdarktheme>=2.1.0",
 ]
 
 [dependency-groups]
