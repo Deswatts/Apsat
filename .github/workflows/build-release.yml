@@ -35,7 +35,7 @@ jobs:
         uses: astral-sh/setup-uv@v5
         with:
           version: "latest"
-          python-version: "3.8.0"
+          python-version: "3.8.10"
 
       - name: Install dependencies
         run: uv sync --no-group dev
@@ -49,12 +49,12 @@ jobs:
           uv run nuitka
           --standalone
           --enable-plugin=pyside6
-          --windows-console-mode=disable
+          --windows-disable-console
           --output-dir=dist
           --jobs=4
           --lto=yes
           --nofollow-import-to=pytest,ruff,ty
-          --msvc=latest
+          --mingw64
           --noinclude-qt-translations
           --windows-icon-from-ico=assets/icon.ico
           --assume-yes-for-downloads
