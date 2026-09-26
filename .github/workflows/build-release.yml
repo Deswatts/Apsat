@@ -57,7 +57,7 @@ jobs:
           --jobs=4
           --lto=yes
           --nofollow-import-to=pytest,ruff,ty
-          --mingw64
+          --msvc=latest
           --noinclude-qt-translations
           --windows-icon-from-ico=assets/icon.ico
           --assume-yes-for-downloads
