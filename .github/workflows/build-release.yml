@@ -42,7 +42,7 @@ jobs:
 
       - name: Update Nuitka
         if: matrix.platform != 'windows'
-        run: uv pip install -U nuitka
+        run: uv add -P nuitka
 
       - name: Show packages
         run: uv tree
