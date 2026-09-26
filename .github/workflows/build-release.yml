@@ -35,7 +35,7 @@ jobs:
         uses: astral-sh/setup-uv@v5
         with:
           version: "latest"
-          python-version: "3.8.10"
+          python-version: "3.13.9"
 
       - name: Install dependencies
         run: uv sync --no-group dev
@@ -46,11 +46,12 @@ jobs:
       # ============================================================
       #                       Windows 构建
       # ============================================================
-      - name: Install lower Nuitka
+      - name: Install lower Python
         if: matrix.platform == 'windows'
         run: |
-          uv pip uninstall nuitka
-          uv pip install nuitka==1.8.5
+          uv venv -p 3.8.10 --clear
+          uv lock
+          uv sync --no-group dev
       
       - name: Build with Nuitka (Windows)
         if: matrix.platform == 'windows'
