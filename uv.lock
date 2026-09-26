@@ -79,7 +79,7 @@ requires-dist = [
     { name = "apsat-core" },
     { name = "deswatts-tools" },
     { name = "imageio" },
-    { name = "nuitka", specifier = "==1.8.5" },
+    { name = "nuitka" },
     { name = "pyqtdarktheme" },
     { name = "pyside6", specifier = "==6.1.3" },
     { name = "requests" },
