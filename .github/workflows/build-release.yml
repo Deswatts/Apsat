@@ -37,12 +37,12 @@ jobs:
           version: "latest"
           python-version: "3.8.10"
 
-      - name: Install dependencies
-        run: uv sync --no-group dev
-
       - name: Update Nuitka
         if: matrix.platform != 'windows'
         run: uv add nuitka>=4.2.1
+
+      - name: Install dependencies
+        run: uv sync --no-group dev
 
       - name: Show packages
         run: uv tree
