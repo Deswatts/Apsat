@@ -37,10 +37,6 @@ jobs:
           version: "latest"
           python-version: "3.8.10"
 
-      - name: Update Nuitka
-        if: matrix.platform != 'windows'
-        run: uv add nuitka>=4.2.1
-
       - name: Install dependencies
         run: uv sync --no-group dev
 
@@ -50,6 +46,12 @@ jobs:
       # ============================================================
       #                       Windows 构建
       # ============================================================
+      - name: Install lower Nuitka
+        if: matrix.platform == 'windows'
+        run: |
+          uv pip uninstall nuitka
+          uv pip install nuitka==1.8.5
+      
       - name: Build with Nuitka (Windows)
         if: matrix.platform == 'windows'
         run: >
