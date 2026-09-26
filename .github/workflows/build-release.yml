@@ -40,6 +40,10 @@ jobs:
       - name: Install dependencies
         run: uv sync --no-group dev
 
+      - name: Update Nuitka
+        if: matrix.platform != 'windows'
+        run: uv pip install -U nuitka
+
       # ============================================================
       #                       Windows 构建
       # ============================================================
@@ -80,11 +84,6 @@ jobs:
       # ============================================================
       #                       macOS 构建
       # ============================================================
-      - name: Install dependencies (macOS)
-        if: matrix.platform == 'macos'
-        run: |
-          uv sync --no-group dev
-      
       - name: Build with Nuitka (macOS)
         if: matrix.platform == 'macos'
         run: >
