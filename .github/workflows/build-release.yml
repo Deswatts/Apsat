@@ -46,13 +46,6 @@ jobs:
       # ============================================================
       #                       Windows 构建
       # ============================================================
-      - name: Install lower Python
-        if: matrix.platform == 'windows'
-        run: |
-          uv venv -p 3.8.10 --clear
-          uv lock
-          uv sync --no-group dev
-      
       - name: Build with Nuitka (Windows)
         if: matrix.platform == 'windows'
         run: >
